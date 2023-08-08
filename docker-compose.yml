@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: scheduler
+      dockerfile: dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./scheduler:/app
