@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   backend:
@@ -11,6 +11,17 @@ services:
       - "8000:8000"
     volumes:
       - ./scheduler:/app
+
+  nginx:
+    depends_on:
+      - backend
+    build:
+      context: .
+      dockerfile: dockerfile.nginx
+    ports:
+      - "8888:80"
+    env_file:
+      - .env.local
 
   db:
     image: postgres:15
