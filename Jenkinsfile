@@ -47,18 +47,10 @@ pipeline {
     }
   }
   post{
-      success{
-          discordSend title: "$JOB_NAME - Build # $BUILD_NUMBER - ${currentBuild.currentResult}!",
-              footer: "Footer Text",
-              link: "$BUILD_URL",
-              description: "$JOB_NAME - Build # $BUILD_NUMBER - ${currentBuild.currentResult}!",
-              result: "${currentBuild.currentResult}",
-              webhookURL: "${DISCORD_WEBHOOK}"
-      }
       failure{
           discordSend title: "$JOB_NAME - Build # $BUILD_NUMBER - ${currentBuild.currentResult}!",
-              footer: "Footer Text",
-              link: "$BUILD_URL",
+              footer: "NODE_NAME",
+              link: "at $BUILD_URL",
               description: "$JOB_NAME - Build # $BUILD_NUMBER - ${currentBuild.currentResult}!",
               result: "${currentBuild.currentResult}",
               webhookURL: "${DISCORD_WEBHOOK}"
