@@ -9,6 +9,7 @@ pipeline {
     NCP_SECRET_KEY = credentials('NCP_SECRET_KEY') 
     SSH_USERNAME = credentials('SSH_USERNAME')
     SSH_PASSWORD = credentials('SSH_PASSWORD')
+    DISCORD_WEBHOOK = credentials('DISCORD_WEBHOOK')
   }
   stages{
     stage("build"){
@@ -44,5 +45,15 @@ pipeline {
         '''
       }
     }
+  }
+  post{
+      failure{
+          discordSend title: "$JOB_NAME - Build # $BUILD_NUMBER - ${currentBuild.currentResult}!",
+              footer: "NODE_NAME",
+              link: "at $BUILD_URL",
+              description: "$JOB_NAME - Build # $BUILD_NUMBER - ${currentBuild.currentResult}!",
+              result: "${currentBuild.currentResult}",
+              webhookURL: "${DISCORD_WEBHOOK}"
+      }
   }
 }
